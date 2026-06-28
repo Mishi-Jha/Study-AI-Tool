@@ -1,0 +1,17 @@
+from groq import Groq
+import os
+from dotenv import load_dotenv
+
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+while True:
+    user_input=input("Enter your query")
+    if user_input=="quit":
+        break
+    response=client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {"role":"user", "content":user_input}
+        ]
+    )
+    print(response.choices[0].message.content)
