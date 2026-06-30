@@ -3,7 +3,8 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-query_list=[]
+system_prompt={"role":"system","content":"You are a CS Study tool so answer all queries in reference to computer science as the root.Explain things clearly not leaving any threads open. Give prerequisite knowledge as well as necessary information like time complexity and optimal approach.After every explanation, ask the student ONE follow-up question to check understanding. If a topic is important for interviews, mention it"}
+query_list=[system_prompt]
 while True:
     user_input=input("Write a message..")
     if user_input=="quit":
