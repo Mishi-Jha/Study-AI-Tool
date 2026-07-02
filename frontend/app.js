@@ -15,6 +15,7 @@ btn.addEventListener("click",async function(event){
     query.className="message user";
     query.innerHTML=`<span class="role-label">you</span><div class="bubble">${message}</div>`;
     chatdiv.appendChild(query);
+    chatdiv.scrollTop = chatdiv.scrollHeight;
     const searchBarText="Thinking..."
     const searchBar=document.getElementById("user-input");
     const sendBtn=document.getElementById("send-btn");
@@ -34,7 +35,7 @@ btn.addEventListener("click",async function(event){
         reply.className="message ai";
         reply.innerHTML=`<span class="role-label">buddy</span><div class="bubble">${marked.parse(data.reply)}</div>`;
         chatdiv.appendChild(reply);
-        
+        chatdiv.scrollTop = chatdiv.scrollHeight;
     }catch(err){
         console.log(err);
     }finally{
