@@ -6,22 +6,22 @@ userInput.addEventListener("keydown",function(event){
         btn.click();
     }
 })
+const chatdiv = document.getElementById("chat-window");
+const emptyState=document.getElementById("empty-state");
 btn.addEventListener("click",async function(event){
     const message=userInput.value;
     if(message.trim() === "") return;
+    emptyState.style.display = "none";
     userInput.value="";
-    const chatdiv = document.getElementById("chat-window");
     const query=document.createElement("div");
     query.className="message user";
     query.innerHTML=`<span class="role-label">you</span><div class="bubble">${message}</div>`;
     chatdiv.appendChild(query);
     chatdiv.scrollTop = chatdiv.scrollHeight;
-    const searchBarText="Thinking..."
-    const searchBar=document.getElementById("user-input");
-    const sendBtn=document.getElementById("send-btn");
+
     try{
-        searchBar.placeholder=searchBarText;
-        sendBtn.style.display="none";
+        userInput.placeholder="Thinking...";
+        btn.style.display="none";
         const res=await fetch("http://127.0.0.1:5000/chat",{
             method:"POST",
             headers:{
@@ -30,7 +30,6 @@ btn.addEventListener("click",async function(event){
             body:JSON.stringify({message: message})
         })
         const data=await res.json();
-        
         const reply=document.createElement("div");
         reply.className="message ai";
         reply.innerHTML=`<span class="role-label">buddy</span><div class="bubble">${marked.parse(data.reply)}</div>`;
@@ -39,7 +38,7 @@ btn.addEventListener("click",async function(event){
     }catch(err){
         console.log(err);
     }finally{
-        searchBar.placeholder="Ask a CS question...";
-        sendBtn.style.display="block";
+        userInput.placeholder="Ask a CS question...";
+        btn.style.display="block";
     }
 })
