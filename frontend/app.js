@@ -42,3 +42,20 @@ btn.addEventListener("click",async function(event){
         btn.style.display="block";
     }
 })
+document.getElementById("pdf-input").addEventListener("change", async function(event){
+    const file=event.target.files[0];
+    const formData=new FormData();
+    formData.append("file",file)
+    const uploadStatus = document.getElementById("upload-status");
+    uploadStatus.textContent="Uploading...";
+    try{
+        const response=await fetch("http://127.0.0.1:5000/upload",{
+            method:"POST",
+            body:formData
+        })
+        uploadStatus.textContent="Notes loaded!";
+    }catch(error){
+        console.log("Upload failed")
+        uploadStatus.textContent="Upload failed";
+    }
+})
