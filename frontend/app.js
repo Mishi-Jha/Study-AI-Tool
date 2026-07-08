@@ -32,7 +32,8 @@ btn.addEventListener("click",async function(event){
         const data=await res.json();
         const reply=document.createElement("div");
         reply.className="message ai";
-        reply.innerHTML=`<span class="role-label">buddy</span><div class="bubble">${marked.parse(data.reply)}</div>`;
+        console.log(data.reply);
+        reply.innerHTML = `<span class="role-label">buddy</span><div class="bubble">${data.reply}</div>`;
         chatdiv.appendChild(reply);
         chatdiv.scrollTop = chatdiv.scrollHeight;
     }catch(err){
@@ -49,13 +50,28 @@ document.getElementById("pdf-input").addEventListener("change", async function(e
     const uploadStatus = document.getElementById("upload-status");
     uploadStatus.textContent="Uploading...";
     try{
+        alert("fetch starting");
         const response=await fetch("http://127.0.0.1:5000/upload",{
             method:"POST",
             body:formData
         })
-        uploadStatus.textContent="Notes loaded!";
+        alert("fetch done, status: " + response.status);
+        const data = await response.json();
+        alert(JSON.stringify(data)); 
+        console.log(data); 
+
+        uploadStatus.textContent=`✓ ${file.name}`;
+        emptyState.style.display = "none";
+
+        const notice = document.createElement("div");
+        notice.className = "message ai";
+        notice.innerHTML = `<div class="bubble">📄 Notes loaded: <strong>${file.name}</strong>. You can now ask questions about your notes!</div>`;
+        chatdiv.appendChild(notice);
+        alert("notice appended"); 
+
     }catch(error){
-        console.log("Upload failed")
+        alert("ERROR: " + error.message);
         uploadStatus.textContent="Upload failed";
+
     }
 })

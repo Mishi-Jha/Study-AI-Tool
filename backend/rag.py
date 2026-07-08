@@ -1,9 +1,13 @@
 import chromadb
+import tempfile
+import os
 from sentence_transformers import SentenceTransformer
 from pypdf import PdfReader
 
+
 model=SentenceTransformer('all-MiniLM-L6-v2')
-client=chromadb.PersistentClient(path="./chroma_db")
+
+client = chromadb.PersistentClient(path=os.path.join(tempfile.gettempdir(), "chroma_db"))
 collection=client.get_or_create_collection(name="notes")
 
 def process_pdf(file_path):

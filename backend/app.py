@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from groq import Groq
 import os
+import tempfile
 from rag import process_pdf, retrieve
 from dotenv import load_dotenv
 load_dotenv()
@@ -29,14 +30,16 @@ def chat():
     query_list.append({"role":"assistant","content":reply})
     return jsonify({"reply":reply})
 
-@app.route("/upload",methods=["POST"])
+
+
+@app.route("/upload", methods=["POST"])
 def upload():
-    file=request.files["file"]
-    file_path=f"./uploads/{file.filename}"
-    os.makedirs("./uploads",exist_ok=True)
+    file = request.files["file"]
+    temp_dir = tempfile.gettempdir()
+    file_path = os.path.join(temp_dir, file.filename)
     file.save(file_path)
     process_pdf(file_path)
-    return jsonify({"message":"PDF processed successfully"})
+    return jsonify({"message": "PDF processed successfully", "filename": file.filename})
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
