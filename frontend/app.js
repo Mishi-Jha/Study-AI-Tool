@@ -50,14 +50,11 @@ document.getElementById("pdf-input").addEventListener("change", async function(e
     const uploadStatus = document.getElementById("upload-status");
     uploadStatus.textContent="Uploading...";
     try{
-        alert("fetch starting");
         const response=await fetch("http://127.0.0.1:5000/upload",{
             method:"POST",
             body:formData
         })
-        alert("fetch done, status: " + response.status);
         const data = await response.json();
-        alert(JSON.stringify(data)); 
         console.log(data); 
 
         uploadStatus.textContent=`✓ ${file.name}`;
@@ -67,7 +64,6 @@ document.getElementById("pdf-input").addEventListener("change", async function(e
         notice.className = "message ai";
         notice.innerHTML = `<div class="bubble">📄 Notes loaded: <strong>${file.name}</strong>. You can now ask questions about your notes!</div>`;
         chatdiv.appendChild(notice);
-        alert("notice appended"); 
 
     }catch(error){
         alert("ERROR: " + error.message);
