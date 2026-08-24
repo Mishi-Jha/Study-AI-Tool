@@ -33,7 +33,7 @@ btn.addEventListener("click",async function(event){
         const reply=document.createElement("div");
         reply.className="message ai";
         console.log(data.reply);
-        reply.innerHTML = `<span class="role-label">buddy</span><div class="bubble">${data.reply}</div>`;
+        reply.innerHTML = `<span class="role-label">buddy</span><div class="bubble">${marked.parse(data.reply)}</div>`;
         chatdiv.appendChild(reply);
         chatdiv.scrollTop = chatdiv.scrollHeight;
     }catch(err){
