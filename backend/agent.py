@@ -25,7 +25,7 @@ tools=[search_tool,search_notes]
 llm_with_tools=llm.bind_tools(tools)
 
 def run_agent(user_message:str)->str:
-    system = SystemMessage(content="You are a CS Study Buddy. Use search_notes for questions about uploaded notes. Use tavily_search_results_json for recent or general CS questions. Always explain clearly with time complexity where relevant.")
+    system = SystemMessage(content="You are a CS Study Buddy. ALWAYS search_notes for questions about uploaded notes. Use tavily_search_results_json for recent or general CS questions. Always explain clearly with time complexity where relevant.")
     messages=[system,HumanMessage(content=user_message)]
     try:
         response=llm_with_tools.invoke(messages)
