@@ -72,22 +72,23 @@ python app.py
 4. **Get Explanations** — AI explains complex topics with examples
 
 ## Architecture
+
+```
 User Question
-↓
+    ↓
 Agent (LangChain + Groq)
-↓
+    ↓
 Tool Decision
-├─→ search_notes (ChromaDB)
-├─→ tavily_search (Web)
-└─→ both
-↓
+    ├─→ search_notes (ChromaDB)
+    ├─→ tavily_search (Web)
+    └─→ both
+    ↓
 Retrieve Relevant Content
-↓
+    ↓
 Generate Answer + Format
-↓
+    ↓
 Return to User
-
-
+```
 ## What I Learned Building This
 
 - **Phase 1** — LLM APIs, prompt engineering, conversation memory
